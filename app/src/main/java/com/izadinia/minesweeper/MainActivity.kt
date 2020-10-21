@@ -121,7 +121,7 @@ class MainActivity : AppCompatActivity() {
      * when the user clicks on an empty cell the game should find all of
      * its surrounding non-mine cells. that is the responsibility of this Recursive function
      *
-     * @param position the cell index at which the function is currently working on
+     * @param position the cell index on which the function is currently working
      */
 
     private fun revealNeighborEmptyCells(position: Int) {

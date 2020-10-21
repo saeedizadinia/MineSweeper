@@ -49,7 +49,7 @@ class BoardGenerator {
     }
 
     /**
-     * this function turn a 2d array into a 1d array to be used as the array of
+     * this function turns a 2d array into a 1d array to be used as the array of
      * objects in a RecyclerView or a ListView.
      */
     private fun setRecyclerCells(cells: Array<Array<Slot>>): Array<Slot> {

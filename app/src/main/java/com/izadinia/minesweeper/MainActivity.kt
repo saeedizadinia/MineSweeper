@@ -63,8 +63,8 @@ class MainActivity : AppCompatActivity() {
      * previously it's been passed onto MainActivity
      * from [OurRecyclerGenerator] adapter class with necessary params.
      *
-     * @param pos the index at which the user long clicked and [hold] the corresponding
-     * [RecyclerView.ViewHolder] of the cell user long clicked.
+     * @param pos the index at which the user long clicked.
+     * @param hold the corresponding [RecyclerView.ViewHolder] of the cell user long clicked.
      */
 
     private fun longClick(pos: Int, hold: SlotViewHolder): Boolean {

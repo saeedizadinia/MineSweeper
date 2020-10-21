@@ -2,25 +2,31 @@ package com.izadinia.minesweeper
 
 import kotlin.random.Random
 
+/**
+ * included in this class, are all the tools needed to build the game board.
+ * the [mineNo] value is later used to check for winning condition and is the way
+ * to make sure the right amount of mines generated is calculated. that means
+ * the value of (Rows*Cols)-mineNo is the amount of non-mine slots, and whenever
+ * the player clicks on a non-mine slot, it's value gets decreased by 1,
+ *  when it's value becomes zero, the player have won the game.
+ *  this logic is implemented in [MainActivity].
+ *
+ *  @author Saeed Izadinia
+ */
 class BoardGenerator {
     private var slots = arrayOf<Array<Slot>>()
     private var size = 0
     private lateinit var mBoard: Board
     var mineNo = 0
 
-    private fun setRecyclerCells(cells: Array<Array<Slot>>): Array<Slot> {
-        var recyclerCells = Array(size) { Slot(Type.EMPTY) }
-        var i = 0
-        val m = recyclerCells.size
-        for (array in cells) {
-            for (value in array) {
-                recyclerCells[i] = value
-                i++
-            }
-        }
-        return recyclerCells
-    }
-
+    /**
+     * this function generates the board using a 2D array and finally turns this matrix
+     * into a simple array to be easily used as an array of [Slot] objects
+     * to populate the RecyclerView or a ListView. (@see [setRecyclerCells])
+     *
+     * @param [board] of the Type [Board]
+     * @return an [Array] of [Slot] objects
+     */
     fun generate(board: Board): Array<Slot> {
         this.mBoard = board
         size = mBoard.columns * mBoard.rows
@@ -40,6 +46,23 @@ class BoardGenerator {
         }
 
         return setRecyclerCells(slots)
+    }
+
+    /**
+     * this function turn a 2d array into a 1d array to be used as the array of
+     * objects in a RecyclerView or a ListView.
+     */
+    private fun setRecyclerCells(cells: Array<Array<Slot>>): Array<Slot> {
+        val recyclerCells = Array(size) { Slot(Type.EMPTY) }
+        var i = 0
+        val m = recyclerCells.size
+        for (array in cells) {
+            for (value in array) {
+                recyclerCells[i] = value
+                i++
+            }
+        }
+        return recyclerCells
     }
 
     private fun generateMines() {

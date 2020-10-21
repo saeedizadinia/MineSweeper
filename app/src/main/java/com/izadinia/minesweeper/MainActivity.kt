@@ -7,11 +7,19 @@ import androidx.core.view.get
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
+/**
+ * all the UI necessary logic and changes happen here.
+ *
+ * @author Saeed Izadinia
+ */
+
 class MainActivity : AppCompatActivity() {
+
     companion object {
-        const val ROWS = 4
-        const val COLS = 4
-        private const val MINES = 3
+        //change these numbers to get the desired board size and number of mines
+        const val ROWS = 8
+        const val COLS = 8
+        private const val MINES = 12
     }
 
     private var remainingCells = 0
@@ -50,6 +58,15 @@ class MainActivity : AppCompatActivity() {
         recyclerView.adapter = adapter
     }
 
+    /**
+     * the long click logic to set or unset flags on each cell happens here.
+     * previously it's been passed onto MainActivity
+     * from [OurRecyclerGenerator] adapter class with necessary params.
+     *
+     * @param pos the index at which the user long clicked and [hold] the corresponding
+     * [RecyclerView.ViewHolder] of the cell user long clicked.
+     */
+
     private fun longClick(pos: Int, hold: SlotViewHolder): Boolean {
         if (!board[pos].isFlagged && !board[pos].isRevealed) {
             board[pos].isFlagged = true
@@ -73,6 +90,9 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * @see longClick the description is pretty much the same.
+     */
     private fun clickListener(position: Int, holder: SlotViewHolder) {
         sHolder = holder
         if (!board[position].isFlagged && !board[position].isRevealed) {
@@ -96,6 +116,13 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
+
+    /**
+     * when the user clicks on an empty cell the game should find all of
+     * its surrounding non-mine cells. that is the responsibility of this Recursive function
+     *
+     * @param position the cell index at which the function is currently working on
+     */
 
     private fun revealNeighborEmptyCells(position: Int) {
         val row = matrixRow(position)
@@ -157,6 +184,9 @@ class MainActivity : AppCompatActivity() {
         return index % COLS
     }
 
+    /**
+     * this function is responsible for most common in game UI changes
+     */
     private fun changeUI(cardText: String?, holder: SlotViewHolder) {
         remainingCells--
         holder.card.setBackgroundColor(resources.getColor(R.color.white))
@@ -171,6 +201,9 @@ class MainActivity : AppCompatActivity() {
         dialog.show(fm, "dialog_game_over")
     }
 
+    /**
+     * the onClick function of the restart button. (declared in XML file "dialog_gameover_layout")
+     */
     fun onResetClicked(view: View) {
         recyclerView.removeAllViews()
         recyclerView.adapter = null
